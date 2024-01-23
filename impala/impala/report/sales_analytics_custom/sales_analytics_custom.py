@@ -86,7 +86,7 @@ class Analytics(object):
 		elif self.filters.tree_type in ['Department', 'Sales Executive']:
 			self.columns.append(
 				{
-					"label": _(self.filters.tree_type),
+					"label": _(self.filters.tree_type + " Name"),
 					"fieldname": "entity",
 					"fieldtype": "Data",
 					"width": 120,
