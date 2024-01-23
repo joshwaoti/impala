@@ -82,6 +82,18 @@ class Analytics(object):
 				}
 			)
 
+		# The section for Department and Sales Executive starts here
+		elif self.filters.tree_type in ['Department', 'Sales Executive']:
+			self.columns.append(
+				{
+					"label": _(self.filters.tree_type),
+					"fieldname": "entity",
+					"fieldtype": "Data",
+					"width": 120,
+				}
+			)
+
+	
 		for end_date in self.periodic_daterange:
 			period = self.get_period(end_date)
 			self.columns.append(
@@ -118,6 +130,14 @@ class Analytics(object):
 
 		elif self.filters.tree_type == "Project":
 			self.get_sales_transactions_based_on_project()
+			self.get_rows()
+
+		elif self.filters.tree_type == "Department":
+			self.get_sales_transactions_based_on_department()
+			self.get_rows()
+
+		elif self.filters.tree_type == "Sales Executive":
+			self.get_sales_transactions_based_on_sales_executive()
 			self.get_rows()
 
 	def get_sales_transactions_based_on_order_type(self):
@@ -237,8 +257,37 @@ class Analytics(object):
 		self.get_groups()
 
 	# The code for departments starts here
-	def get_sales_based_on_departments(self):
-		pass
+	def get_sales_transactions_based_on_department(self):
+		if self.filters["value_quantity"] == "Value":
+			value_field = "base_net_total as value_field"
+		else:
+			value_field = "total_qty as value_field"
+
+		self.entries = frappe.get_all(
+			self.filters.doc_type,
+			fields=["department as entity", value_field, self.date_field],
+			filters={
+				"docstatus": 1,
+				"company": self.filters.company,
+				self.date_field: ("between", [self.filters.from_date, self.filters.to_date]),
+			},
+		)
+
+	def get_get_sales_transactions_based_on_sales_executive(self):
+		if self.filters["value_quantity"] == "Value":
+			value_field = "base_net_total as value_field"
+		else:
+			value_field = "total_qty as value_field"
+
+		self.entries = frappe.get_all(
+			self.filters.doc_type,
+			fields=["sales_person as entity", value_field, self.date_field],
+			filters={
+				"docstatus": 1,
+				"company": self.filters.company,
+				self.date_field: ("between", [self.filters.from_date, self.filters.to_date]),
+			},
+		)
 
 	def get_sales_transactions_based_on_project(self):
 		if self.filters["value_quantity"] == "Value":
