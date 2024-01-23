@@ -273,7 +273,7 @@ class Analytics(object):
 			},
 		)
 
-	def get_get_sales_transactions_based_on_sales_executive(self):
+	def get_sales_transactions_based_on_sales_executive(self):
 		if self.filters["value_quantity"] == "Value":
 			value_field = "base_net_total as value_field"
 		else:
