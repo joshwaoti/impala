@@ -83,15 +83,15 @@ class Analytics(object):
 			)
 
 		# The section for Department and Sales Executive starts here
-		elif self.filters.tree_type in ['Department', 'Sales Executive']:
-			self.columns.append(
-				{
-					"label": _(self.filters.tree_type + " Name"),
-					"fieldname": "entity",
-					"fieldtype": "Data",
-					"width": 120,
-				}
-			)
+		# elif self.filters.tree_type in ['Department', 'Sales Executive']:
+		# 	self.columns.append(
+		# 		{
+		# 			"label": _(self.filters.tree_type),
+		# 			"fieldname": "entity_name",
+		# 			"fieldtype": "Data",
+		# 			"width": 120,
+		# 		}
+		# 	)
 
 	
 		for end_date in self.periodic_daterange:
